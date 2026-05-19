@@ -1,0 +1,16 @@
+const express = require('express');
+const router = express.Router();
+const fs = require('fs').promises;
+const path = require('path');
+
+router.delete('/delete-file', async (req, res) => {
+    const tempFilePath = path.join(__dirname, '../data/temp.json');
+    try {
+        await fs.unlink(tempFilePath);
+        res.status(200).json({ message: 'Arquivo JSON deletado fisicamente com sucesso.' });
+    } catch (err) {
+        res.status(404).json({ error: 'Arquivo já foi deletado ou não existe.' });
+    }
+});
+
+module.exports = router;
