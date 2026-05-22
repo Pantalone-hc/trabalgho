@@ -11,11 +11,15 @@ router.use(loggerSistema);
 
 router.delete('/delete-file', async (req, res) => {
     const tempFilePath = path.join(__dirname, '../data/temp.json');
+    
     try {
+        await fs.access(tempFilePath); 
+        
         await fs.unlink(tempFilePath);
-        res.status(200).json({ message: 'Arquivo JSON deletado fisicamente com sucesso.' });
+        res.status(200).json({ message: 'Arquivo deletado com sucesso!' });
+        
     } catch (err) {
-        res.status(404).json({ error: 'Arquivo já foi deletado ou não existe.' });
+        res.status(404).json({ error: 'O arquivo temp.json já não existe mais.' });
     }
 });
 
