@@ -3,6 +3,12 @@ const router = express.Router();
 const fs = require('fs').promises;
 const path = require('path');
 
+const loggerCartas = (req, res, next) => {
+    console.log(`[LOG CARTAS]: Acessando ${req.method} em ${req.originalUrl}`);
+    next();
+};
+router.use(loggerCartas);
+
 const filePath = path.join(__dirname, '../data/cards.json');
 
 async function readData() {
@@ -49,7 +55,14 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         let cards = await readData();
-        cards = cards.filter(c => c.id !== parseInt(req.params.id));
+        const id = parseInt(req.params.id);
+        
+        const index = cards.findIndex(c => c.id === id);
+        if (index === -1) {
+            return res.status(404).json({ error: 'Carta não encontrada' });
+        }
+
+        cards.splice(index, 1);
         await fs.writeFile(filePath, JSON.stringify(cards, null, 2));
         res.status(200).json({ message: 'Deletado com sucesso' });
     } catch (err) {

@@ -25,6 +25,22 @@ async function carregarCartas() {
     });
 }
 
+async function carregarAcessorios() {
+    const response = await fetch('http://localhost:3000/api/accessories');
+    const accessories = await response.json();
+    
+    const list = document.getElementById('accessoryList');
+    list.innerHTML = '';
+    
+    accessories.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} (${item.type})`;
+        list.appendChild(li);
+    });
+}
+
+carregarAcessorios();
+
 document.getElementById('cardForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value;
