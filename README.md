@@ -1,0 +1,3 @@
+O projeto desenvolvido é um sistema Full-Stack focado no gerenciamento de inventário para colecionadores de Trading Card Games (TCG). A aplicação permite catalogar cartas individuais (singles) e produtos lacrados, como Elite Trainer Boxes.
+
+O back-end foi desenvolvido em Node.js com o framework Express, expondo uma API RESTful modularizada que opera exclusivamente via formato JSON. Para o armazenamento e persistência dos dados, optou-se pela utilização do File System (fs.promises), aplicando operações de I/O assíncronas em arquivos físicos.json. No front-end, não tive a disciplina de react, então esta é a primeira, portanto, optei por um cliente leve, consumindo a API nativamente e garantindo a reatividade da interface de controle da coleção.
